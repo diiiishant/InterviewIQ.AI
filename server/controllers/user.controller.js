@@ -10,6 +10,6 @@ export const getCurrentUser = async(req,res)=>{
         }
         return res.status(200).json(user)
     } catch (error) {
-        return res.status(500).json({messag:`failed to get currentUser${error}`})       
+        return res.status(500).json({message:`failed to get currentUser${error}`})       
     }
 }

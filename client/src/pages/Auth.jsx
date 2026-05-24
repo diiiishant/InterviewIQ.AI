@@ -7,47 +7,27 @@ import { signInWithPopup } from 'firebase/auth';
 import { auth, provider } from '../utils/firebase';
 import axios from "axios";
 import { ServerUrl } from '../App';
+import { useDispatch } from 'react-redux';
+import { setUserData } from '../redux/userSlice';
 function Auth() {
-
-  // const handleGoogleAuth = async () =>{
-  //   try {
-  //     const response = await signInWithPopup(auth,provider);
-  //     let User = response.user
-  //     let name = User.displayName
-  //     let email = User.email
-  //     const result = await axios.post(ServerUrl + "/api/auth/google",{name,email},{withCredentials:true})
-  //     console.log(result.data)
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const dispatch = useDispatch()
   
-  const handleGoogleAuth = async () => {
- try {
-   const response =await signInWithPopup(auth, provider);
+  const handleGoogleAuth = async () =>{
+    try {
+      const response = await signInWithPopup(auth,provider);
+      let User = response.user
+      let name = User.displayName
+      let email = User.email
+      const result = await axios.post(ServerUrl + "/api/auth/google",
+        {name,email},{withCredentials:true})
+      dispatch(setUserData(result.data))
 
-   console.log("Firebase:", response);
 
-   const User = response.user;
-
-   const result =
-   await axios.post(
-      ServerUrl + "/api/auth/google",
-      {
-        name: User.displayName,
-        email: User.email
-      },
-      {
-        withCredentials: true
-      }
-   );
-
-   console.log("Backend:", result.data);
-
- } catch (error) {
-   console.log(error.response?.data || error);
- }
-};
+    } catch (error) {
+      console.log(error)
+        dispatch(setUserData(null))
+    }
+  };
   
   return (
     <div className='w-full min-h-screen bg-[#f3f3f3] flex items-center justify-center px-6 py-20'>

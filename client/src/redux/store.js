@@ -6,3 +6,9 @@ export const store = configureStore({
     user:userSlice
   },
 })
+
+// export default configureStore({
+//   reducer: {
+//     user:userSlice
+//   },
+// })
