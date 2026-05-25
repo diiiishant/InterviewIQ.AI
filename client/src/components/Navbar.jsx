@@ -97,6 +97,7 @@ function Navbar() {
                 </div>
             </motion.div>
             {showAuth && <AuthModel onClose={()=>setShowAuth(false)}/>}
+                
         </div>
     )
 }
