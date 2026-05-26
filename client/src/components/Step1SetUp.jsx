@@ -65,33 +65,33 @@ function Step1SetUp({ onStart }) {
                     transition={{ duration: 0.7 }}
                     className='p-12 bg-white'>
 
-                        <h2 className='text-3xl font-bold text-gray-800 mb-8'>Interview SetUp</h2>
+                    <h2 className='text-3xl font-bold text-gray-800 mb-8'>Interview SetUp</h2>
 
-                        <div className='space-y-6'>
-                            <div className='relative'>
-                                <FaUserTie className='absolute top-4 left-4 text-gray-400'/>
-                                <input type='text' placeholder='Enter role'
+                    <div className='space-y-6'>
+                        <div className='relative'>
+                            <FaUserTie className='absolute top-4 left-4 text-gray-400' />
+                            <input type='text' placeholder='Enter role'
                                 className='w-full pl-12 pr-4 py-3 border border-gray-200 
                                 rounded-xl focus:ring-2 focus:ring-green-500 outline-none transition'
-                                onChange={(e)=>setRole(e.target.value)} value={role}/>
-                            </div>
+                                onChange={(e) => setRole(e.target.value)} value={role} />
+                        </div>
 
-                            <div className='relative'>
-                                <FaBriefcase className='absolute top-4 left-4 text-gray-400'/>
-                                <input type='text' placeholder='Enter Experience (e.g. 2 years)'
+                        <div className='relative'>
+                            <FaBriefcase className='absolute top-4 left-4 text-gray-400' />
+                            <input type='text' placeholder='Enter Experience (e.g. 2 years)'
                                 className='w-full pl-12 pr-4 py-3 border border-gray-200 
                                 rounded-xl focus:ring-2 focus:ring-green-500 outline-none transition'
-                                onChange={(e)=>setExperience(e.target.value)} value={experience}/>
+                                onChange={(e) => setExperience(e.target.value)} value={experience} />
 
-                            <select value={mode}
-                            onChange={(e)=>setMode(e.target.value)}
+                        </div>
+                        <select value={mode}
+                            onChange={(e) => setMode(e.target.value)}
                             className="w-full py-3 px-4 border border-gray-200 rounded-xl
                             focus:ring-2 focus:ring-green-500 outline-none transition">
-                                <option value="Technical">Technical Interview</option>
-                                <option value="HR">HR Interview</option>
-                            </select>
-                            </div>
-                        </div>
+                            <option value="Technical">Technical Interview</option>
+                            <option value="HR">HR Interview</option>
+                        </select>
+                    </div>
 
                 </motion.div>
             </div>
