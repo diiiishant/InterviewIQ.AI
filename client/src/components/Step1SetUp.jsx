@@ -6,6 +6,13 @@ function Step1SetUp({ onStart }) {
     const [role, setRole] = useState("");
     const [experience, setExperience] = useState("");
     const [mode, setMode] = useState("Technical");
+    const [resumeFile, setResumeFile] = useState(null); 
+    const [loading, setLoading]= useState(false);
+    const [projects, setProjects] = useState([]);
+    const [skills, setSkills] = useState([]);
+    const [resumeText, setResumeText] = useState("");
+    const [analysisDone, setAnalysisDone] = useState(false);
+    const [analyzing, setAnalyzing] = useState(false);
     return (
         <motion.div
             initial={{ opacity: 0 }}
