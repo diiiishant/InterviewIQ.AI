@@ -10,7 +10,7 @@ export const analyzeResume = async (req, res) => {
         const filepath = req.file.path
 
         const fileBuffer = await fs.promises.readFile(filepath)
-        const uint8array = new (fileBuffer)
+        const uint8array = new Uint8Array(fileBuffer)
 
         const pdf = await pdfjsLib.getDocument({ data: uint8array }).promise;
 
@@ -38,7 +38,7 @@ export const analyzeResume = async (req, res) => {
             }`
         },
         {
-            role: "User",
+            role: "user",
             content: resumeText
         }
         ];
