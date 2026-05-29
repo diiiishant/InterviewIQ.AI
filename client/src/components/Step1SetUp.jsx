@@ -3,8 +3,12 @@ import { motion } from "motion/react"
 import { FaUserTie, FaBriefcase, FaFileUpload, FaMicrophoneAlt, FaChartLine, } from "react-icons/fa";
 import axios from 'axios';
 import { ServerUrl } from '../App';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserData } from '../redux/userSlice';
 
 function Step1SetUp({ onStart }) {
+    const { userData } = useSelector((state) => state.user);
+    const dispatch = useDispatch();
     const [role, setRole] = useState("");
     const [experience, setExperience] = useState("");
     const [mode, setMode] = useState("Technical");
@@ -41,6 +45,23 @@ function Step1SetUp({ onStart }) {
         }
     }
 
+    const hanldleStart = async () => {
+        setLoading(true);
+        try {
+            const result = await axios.post(ServerUrl + "/api/interview/generate-questions",
+                { role, experience, mode, projects, skills, resumeText },
+                { withCredentials: true })
+            console.log(result.data)
+            if (userData) {
+                dispatch(setUserData({ ...userData, credits: result.data.creditsLeft }));
+            }
+            setLoading(false)
+            onStart(result.data);
+        } catch (error) {
+            console.log(error.response?.data);
+            setLoading(false);
+        }
+    }
     return (
         <motion.div
             initial={{ opacity: 0 }}
@@ -140,8 +161,8 @@ function Step1SetUp({ onStart }) {
                                     accept=".pdf,.doc,.docx,application/pdf"
                                     id="resumeUpload"
                                     className='hidden'
-                                    onChange={(e) => setResumeFile(e.target.files[0])} 
-                                    />
+                                    onChange={(e) => setResumeFile(e.target.files[0])}
+                                />
                                 <p className='text-gray-600 font-medium'>
                                     {resumeFile ? resumeFile.name : "Click to upload resume(Optional)"}
                                 </p>
@@ -192,17 +213,17 @@ function Step1SetUp({ onStart }) {
                                         </div>
                                     </div>
                                 )}
-
                             </motion.div>
                         )}
 
                         <motion.button
-                            disabled={!role || !experience}
+                            onClick={hanldleStart}
+                            disabled={!role || !experience || loading}
                             whileHover={{ scale: 1.03 }}
                             whileTap={{ scale: 0.95 }}
                             className='w-full disabled:bg-gray-600 bg-green-600  hover:bg-green-900 
                             text-white py-3 rounded-full text-lg font-semibold transition duration-300 shadow-md'>
-                            Start Interview
+                            {loading ? "Starting..." : "Start Interview"}
                         </motion.button>
 
                     </div>
