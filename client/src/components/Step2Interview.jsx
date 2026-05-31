@@ -4,6 +4,8 @@ import femalevideo from "../assets/video/female-ai.mp4"
 import Timer from './Timer'
 import { motion } from "motion/react"
 import { FaMicrophone, FaMicrophoneSlash } from "react-icons/fa"
+import axios from "axios"
+import { ServerUrl } from '../App'
 
 function Step2Interview({ interviewData, onFinish }) {
   const { interviewId, questions = [], userName } = interviewData || {};
@@ -13,7 +15,7 @@ function Step2Interview({ interviewData, onFinish }) {
   const recognitionRef = useRef(null);
   const [isAIPlaying, setIsAIPlaying] = useState(false);
 
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(1);
   const [answer, setAnswer] = useState("");
   const [feedback, setFeedback] = useState("");
   const [timeLeft, setTimeLeft] = useState(
@@ -97,9 +99,9 @@ function Step2Interview({ interviewData, onFinish }) {
         videoRef.current.currentTime = 0;
         setIsAIPlaying(false);
 
-        if(isMicOn){
+        if (isMicOn) {
           startMic();
-        } 
+        }
         setTimeout(() => {
           setSubtitle("");
           resolve();
@@ -133,7 +135,7 @@ function Step2Interview({ interviewData, onFinish }) {
           await speakText("Alright, this one might be a bit more challenging");
         }
         await speakText(currentQuestion.question);
-        if(isMicOn){
+        if (isMicOn) {
           startMic();
         }
       }
@@ -170,7 +172,7 @@ function Step2Interview({ interviewData, onFinish }) {
       const transcript = event.results[event.results.length - 1][0].transcript;
       setAnswer((prev) => prev + " " + transcript);
     };
-    recognition.current = recognition;
+    recognitionRef.current = recognition;
   }, []);
 
   const startMic = () => {
@@ -178,7 +180,7 @@ function Step2Interview({ interviewData, onFinish }) {
       try {
         recognitionRef.current.start();
       } catch { }
-    }     
+    }
   };
 
   const stopMic = () => {
@@ -195,6 +197,27 @@ function Step2Interview({ interviewData, onFinish }) {
     }
     setIsMicOn(!isMicOn);
   };
+
+  const submitAnswer = async () => {
+    if (isSubmitting) return;
+    stopMic()
+    setIsSubmitting(true)
+
+    try {
+      const result = await axios.post(ServerUrl + "/api/interview/submit-answer", {
+        interviewId,
+        questionIndex: currentIndex,
+        answer,
+        timeTaken: currentQuestion.timelimit - timeLeft,
+      }, { withCredentials: true })
+      setFeedback(result.data.feedback)
+      speakText(result.data.feedback)
+      setIsSubmitting(false)
+    } catch (error) {
+      console.log(error)
+      setIsSubmitting(false)
+    }
+  }
 
   return (
     <div className='min-h-screen bg-linear-to-br from-emerald-50 via-white 
@@ -277,9 +300,9 @@ function Step2Interview({ interviewData, onFinish }) {
           outline-none border  border-gray-200 focus:ring-2 
           focus:ring-emerald-500 transition text-gray-800'/>
 
-          <div className='flex items-center gap-4 mt-6'>
+          {!feedback ? (<div className='flex items-center gap-4 mt-6'>
             <motion.button
-            onClick={toggleMic}
+              onClick={toggleMic}
               whileTap={{ scale: 0.9 }}
               className='w-12 h-12 sm:w-14 sm:h-14 flex items-center 
             justify-center rounded-full bg-black text-white shadow-lg'>
@@ -287,12 +310,19 @@ function Step2Interview({ interviewData, onFinish }) {
             </motion.button>
 
             <motion.button
+            onClick={submitAnswer}
+            disabled={isSubmitting}
               whileTap={{ scale: 0.95 }}
               className='flex-1 bg-gradient-to-r from-emerald-600 to-teal-500
              text-white py-3 sm:py-4 rounded-2xl shadow-lg hover:opacity-90 transition font-semibold'>
-              Submit Answer
+              {isSubmitting?"Submitting...":"Submit Answer"}
+
             </motion.button>
-          </div>
+          </div>):(
+            <motion.div>
+              
+            </motion.div>
+          )}
         </div>
       </div>
     </div >
