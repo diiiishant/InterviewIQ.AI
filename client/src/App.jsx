@@ -38,7 +38,7 @@ function App() {
         <Route path='/interview' element={<Interviewpage/>}/>
         <Route path='/history' element={<InterviewHistory/>}/>
         <Route path='/pricing' element={<Pricing/>}/>
-        <Route path='/report' element={<InterviewReport/>}/>
+        <Route path='/report/:id' element={<InterviewReport/>}/>
     </Routes>
   )
 }
