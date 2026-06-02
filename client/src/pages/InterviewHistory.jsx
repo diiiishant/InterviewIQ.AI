@@ -5,14 +5,13 @@ import { ServerUrl } from '../App.jsx'
 import { FaArrowLeft } from 'react-icons/fa'
 
 function InterviewHistory() {
-    const [interviews, setInterviews] = useState() 
+    const [interviews, setInterviews] = useState([]) 
     const navigate = useNavigate()
 
     useEffect(() => {
         const getMyInterview = async () => {
             try {
                 const result = await axios.get(ServerUrl + "/api/interview/get-interview", { withCredentials: true })
-                console.log(result.data)
                 setInterviews(result.data)
             } catch (error) {
                 console.log(error)
