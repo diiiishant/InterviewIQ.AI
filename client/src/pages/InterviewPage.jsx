@@ -27,4 +27,4 @@ import Step3Report from '../components/Step3Report'
    )
  }
  
- export default Interviewpage
+ export default InterviewPage
