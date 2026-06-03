@@ -109,18 +109,18 @@ function Step3Report({ report }) {
 
     doc.setFillColor(255,255,255);
     doc.setDrawColor(220);
-    doc.roundedRect(margin, currentY, contentWidth, 35, 4, 4 );
+    doc.roundedRect(margin, currentY, contentWidth, 35,4,4);
 
-    doc.sentFont("helvitica","bold");
+    doc.setFont("helvitica","bold");
     doc.text("Proffesional Advice",margin+10,currentY+10);
 
     doc.setFont("helvitica","normal");
     doc.setFontSize(11);
 
     const splitAdvice = doc.splitTextToSize(advice,contentWidth-20);
-    doc.text(splitAdvice,margin+10,currentY+20);
+    doc.text(splitAdvice,margin + 10,currentY + 20);
 
-    currentY+=50;
+    currentY += 50;
     //question table
     autoTable(doc,{
       startY:currentY,
@@ -172,7 +172,7 @@ function Step3Report({ report }) {
           </div>
         </div>
 
-        <button className='bg-emerald-600 hover:bg-emerald-700 text-white py-3 px-6 rounded-xl 
+        <button onClick={downloadPDF} className='bg-emerald-600 hover:bg-emerald-700 text-white py-3 px-6 rounded-xl 
         shadow-md transition-all duration-300 font-semibold text-sm sm:text-base text-nowrap'>Download PDF</button>
 
       </div>

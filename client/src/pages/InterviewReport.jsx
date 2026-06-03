@@ -19,7 +19,7 @@ function InterviewReport() {
       }
     }
     fetchReport()
-  },[])
+  }, [])
 
   if (!report) {
     return (

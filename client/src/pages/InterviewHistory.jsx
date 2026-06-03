@@ -5,14 +5,17 @@ import { ServerUrl } from '../App.jsx'
 import { FaArrowLeft } from 'react-icons/fa'
 
 function InterviewHistory() {
-    const [interviews, setInterviews] = useState([]) 
+    const [interviews, setInterviews] = useState([])
     const navigate = useNavigate()
 
     useEffect(() => {
         const getMyInterview = async () => {
             try {
-                const result = await axios.get(ServerUrl + "/api/interview/get-interview", { withCredentials: true })
-                setInterviews(result.data)
+                const result = await axios.get(
+                    ServerUrl + "/api/interview/get-interview",
+                    { withCredentials: true })
+                console.log("Interview Data:", result.data);
+                setInterviews(result.data);
             } catch (error) {
                 console.log(error)
             }
@@ -27,7 +30,7 @@ function InterviewHistory() {
                     <button
                         onClick={() => navigate("/")}
                         className='mt-1 p-3 rounded-full bg-white shadow hover:shadow-md transition'>
-                        <FaArrowLeft className='text-gray-600'/>
+                        <FaArrowLeft className='text-gray-600' />
                     </button>
                     <div>
                         <h1 className='text-3xl font-bold flex-nowrap text-gray-800'>Interview History</h1>
@@ -42,9 +45,9 @@ function InterviewHistory() {
                     :
                     <div className='grid gap-6'>
                         {interviews.map((item, index) => (
-                            <div key={index} 
-                            onClick={()=>navigate(`/report/${item._id}`)}
-                            className='bg-white p-6 rounded-2xl shadow-md hover:shadow-xl 
+                            <div key={index}
+                                onClick={() => navigate(`/report/${item._id}`)}
+                                className='bg-white p-6 rounded-2xl shadow-md hover:shadow-xl 
                                 transition-all duration-300 cursor-pointer border border-gray-100'>
                                 <div className='flex flex-col md:flex-row 
                                 md:items-center md:justify-between gap-4'>
@@ -61,13 +64,13 @@ function InterviewHistory() {
                                     </div>
                                     <div className='flex items-center gap-6'>
                                         <div className='text-right'>
-                                            <p className='text-lg font-bold text-emerald-600'>{item.finalscore || 0}/10</p>
+                                            <p className='text-lg font-bold text-emerald-600'>{item.finalScore || 0}/10</p>
                                             <p className='text-xs text-gray-400'>Overall Score</p>
                                         </div>
 
                                         <span className={`px-3 py-1 rounded-full text-xs font-medium 
-                                            ${item.status==="completed" 
-                                                ? "bg-emerald-100 text-emerald-700" 
+                                            ${item.status === "completed"
+                                                ? "bg-emerald-100 text-emerald-700"
                                                 : "bg-yellow-100 text-yellow-700"}`}>
                                             {item.status}
                                         </span>

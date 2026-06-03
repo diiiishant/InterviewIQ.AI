@@ -133,10 +133,10 @@ function Step2Interview({ interviewData, onFinish }) {
 
 
   useEffect(() => {
-  if (!isIntroPhase && currentQuestion) {
-    setTimeLeft(currentQuestion.timelimit || 60);
-  }
-}, [currentIndex, isIntroPhase]);
+    if (!isIntroPhase && currentQuestion) {
+      setTimeLeft(currentQuestion.timelimit || 60);
+    }
+  }, [currentIndex, isIntroPhase]);
 
 
 
@@ -260,7 +260,7 @@ function Step2Interview({ interviewData, onFinish }) {
     if (isIntroPhase) return;
     if (!currentQuestion) return;
     if (timeLeft === 0 && !isSubmitting && !feedback) {
-      submitAnswer();
+      submitAnswer()
     }
   }, [timeLeft]);
 
