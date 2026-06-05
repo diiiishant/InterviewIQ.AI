@@ -11,7 +11,7 @@ import paymentRouter from "./routes/payment.route.js";
 
 const app =express()
 const allowedOrigins = [
-    "https://interviewiq-ai-1client-6820.onrender.com",
+    "https://interview-iq-ai-ivory.vercel.app",
     process.env.FRONTEND_URL
 ].filter(Boolean);
 
