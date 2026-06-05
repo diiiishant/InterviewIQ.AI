@@ -11,7 +11,7 @@ import InterviewHistory from './pages/InterviewHistory';
 import Pricing from './pages/Pricing';
 import InterviewReport from './pages/InterviewReport';
 
-export const ServerUrl = "https://interviewiq-ai-tirb.onrender.com"
+export const ServerUrl = import.meta.env.VITE_API_URL || "https://interviewiq-ai-tirb.onrender.com"
 
 function App() {
 

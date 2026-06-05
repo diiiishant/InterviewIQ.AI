@@ -47,7 +47,12 @@ export const analyzeResume = async (req, res) => {
 
         const aiResponse = await askAi(messages)
 
-        const parsed = JSON.parse(aiResponse)
+        let cleanedResponse = aiResponse.trim();
+        if (cleanedResponse.startsWith("```")) {
+            cleanedResponse = cleanedResponse.replace(/^```(?:json)?\n?|```$/g, "").trim();
+        }
+
+        const parsed = JSON.parse(cleanedResponse)
 
         fs.unlinkSync(filepath)
 
@@ -61,6 +66,11 @@ export const analyzeResume = async (req, res) => {
 
     } catch (error) {
         console.error(error);
+        try {
+            fs.appendFileSync("error.log", `${new Date().toISOString()} - analyzeResume Error: ${error.stack || error.message || error}\n`);
+        } catch (logErr) {
+            console.error("Failed to write to error.log:", logErr);
+        }
 
         if (req.file && fs.existsSync(req.file.path)) {
             fs.unlinkSync(req.file.path);
@@ -272,7 +282,12 @@ export const submitAnswer = async (req, res) => {
 
         const aiResponse = await askAi(messages)
 
-        const parsed = JSON.parse(aiResponse);
+        let cleanedResponse = aiResponse.trim();
+        if (cleanedResponse.startsWith("```")) {
+            cleanedResponse = cleanedResponse.replace(/^```(?:json)?\n?|```$/g, "").trim();
+        }
+
+        const parsed = JSON.parse(cleanedResponse);
 
         question.answer = answer;
         question.confidence = parsed.confidence;
@@ -284,6 +299,12 @@ export const submitAnswer = async (req, res) => {
 
         return res.status(200).json({ feedback: parsed.feedback })
     } catch (error) {
+        console.error(error);
+        try {
+            fs.appendFileSync("error.log", `${new Date().toISOString()} - submitAnswer Error: ${error.stack || error.message || error}\n`);
+        } catch (logErr) {
+            console.error("Failed to write to error.log:", logErr);
+        }
         return res.status(500).json({ message: `failed to submit answer ${error}` });
     }
 }
