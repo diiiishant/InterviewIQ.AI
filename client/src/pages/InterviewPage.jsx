@@ -27,8 +27,4 @@ import Step3Report from '../components/Step3Report'
    )
  }
  
-<<<<<<< HEAD
  export default InterviewPage
-=======
- export default InterviewPage
->>>>>>> dbe5a85 (Added new features and updated project)
