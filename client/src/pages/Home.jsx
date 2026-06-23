@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import Navbar from '../components/Navbar'
+import SEO from '../components/SEO'
 import { useSelector } from 'react-redux'
 import { motion } from 'motion/react';
 import { BsRobot, BsMic, BsClock, BsBarChart, BsFileEarmarkText } from 'react-icons/bs';
@@ -23,6 +24,11 @@ function Home() {
   const navigate = useNavigate()
   return (
     <div className='min-h-screen bg-[#f3f3f3] flex flex-col'>
+      <SEO 
+        title="InterviewIQ.AI - AI-Powered Mock Interview Platform"
+        description="Practice role-based mock interviews with smart voice feedback, adaptive difficulty, and real-time performance analytics."
+        keywords="interview prep, mock interview, AI interview, HR mock interview, technical interview practice, career preparation"
+      />
       <Navbar />
 
       <div className='flex-1 px-6 py-20'>

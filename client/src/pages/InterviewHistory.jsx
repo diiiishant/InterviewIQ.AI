@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ServerUrl } from '../App.jsx'
 import { FaArrowLeft } from 'react-icons/fa'
+import SEO from '../components/SEO'
 
 function InterviewHistory() {
     const [interviews, setInterviews] = useState([])
@@ -25,6 +26,11 @@ function InterviewHistory() {
 
     return (
         <div className='max-h-screen bg-linear-to-br from-gray-50 to-emerald-50 py-10'>
+            <SEO 
+                title="Your Interview History - InterviewIQ.AI"
+                description="Track your past interviews, review detailed AI evaluation reports, and monitor your progress."
+                keywords="interview history, past mock interviews, interview analytics, career tracking"
+            />
             <div className='w-[90vw] lg:w-[70vw] max-w-[90%] mx-auto'>
                 <div className='mb-10 w-full flex items-start gap-4 flex-wrap'>
                     <button

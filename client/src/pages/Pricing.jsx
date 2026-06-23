@@ -6,6 +6,7 @@ import axios from 'axios';
 import { ServerUrl } from '../App';
 import { useDispatch } from 'react-redux';
 import { setUserData } from '../redux/userSlice';
+import SEO from '../components/SEO';
 
 function Pricing() {
   const navigate = useNavigate()
@@ -116,6 +117,11 @@ function Pricing() {
 
   return (
     <div className='min-h-screen bg-gradient-to-br from-gray-50 to-emerald-50 py-16 px-6'>
+      <SEO 
+        title="Pricing Plans - InterviewIQ.AI"
+        description="Choose a pricing plan that fits your career preparation needs. Get credits to unlock premium mock interview sessions."
+        keywords="pricing, interview credits, purchase credits, mock interview plans"
+      />
       <div className='max-w-6xl mx-auto mb-14 fle items-start gap-4'>
         <button onClick={() => navigate("/")} className='mt-2 p-3 rounded-full bg-white shadow hover:shadow-md transition'>
           <FaArrowLeft className='text-gray-600' />

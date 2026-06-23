@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { ServerUrl } from '../App';
 import Step3Report from '../components/Step3Report';
+import SEO from '../components/SEO';
 
 function InterviewReport() {
   const { id } = useParams()
@@ -24,6 +25,10 @@ function InterviewReport() {
   if (!report) {
     return (
       <div className="min-h-screen flex items-center justify-center">
+        <SEO 
+          title="Loading Interview Report... - InterviewIQ.AI"
+          description="Fetching your AI-powered mock interview report and feedback."
+        />
         <p className="text-gray-500 text-lg">
           Loading Report...
         </p>
@@ -31,7 +36,16 @@ function InterviewReport() {
     );
   }
 
-  return <Step3Report report={report} />
+  return (
+    <>
+      <SEO 
+        title={`${report.role} Interview Report - InterviewIQ.AI`}
+        description={`Detailed AI evaluation report for the ${report.role} mock interview. Overall Score: ${report.finalScore || 0}/10.`}
+        keywords={`${report.role} interview, mock interview report, interview feedback, performance score`}
+      />
+      <Step3Report report={report} />
+    </>
+  );
 }
 
 export default InterviewReport

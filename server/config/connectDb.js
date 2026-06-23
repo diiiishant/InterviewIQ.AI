@@ -8,5 +8,5 @@ const connectDb = async () => {
         console.log(`Databse Error ${error}`)
     }
 }
-
+ 
 export default connectDb

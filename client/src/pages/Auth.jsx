@@ -9,6 +9,7 @@ import axios from "axios";
 import { ServerUrl } from '../App';
 import { useDispatch } from 'react-redux';
 import { setUserData } from '../redux/userSlice';
+import SEO from '../components/SEO';
 
 function Auth({isModel = false}) {
   const dispatch = useDispatch()
@@ -32,6 +33,13 @@ function Auth({isModel = false}) {
   
   return (
     <div className={`w-full ${isModel ? "py-4":"min-h-screen bg-[#f3f3f3] flex items-center justify-center px-6 py-20"}`}>
+      {!isModel && (
+        <SEO 
+          title="Sign In / Sign Up - InterviewIQ.AI"
+          description="Create an account or sign in to InterviewIQ.AI to start preparing for your interviews and practicing AI mock sessions."
+          keywords="sign in, register, login, interviewiq, mock interview"
+        />
+      )}
       <motion.div 
       initial={{opacity:0 , y:-40}}
       animate={{opacity:1 , y:0}}
